@@ -30,6 +30,10 @@ class Car
     #[ORM\JoinColumn(nullable: false)]
     private ?Color $color = null;
 
+    #[ORM\ManyToOne(inversedBy: 'car')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?VehicleManufacturer $vehicleManufacturer = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +95,18 @@ class Car
     public function setColor(?Color $color): static
     {
         $this->color = $color;
+
+        return $this;
+    }
+
+    public function getVehicleManufacturer(): ?VehicleManufacturer
+    {
+        return $this->vehicleManufacturer;
+    }
+
+    public function setVehicleManufacturer(?VehicleManufacturer $vehicleManufacturer): static
+    {
+        $this->vehicleManufacturer = $vehicleManufacturer;
 
         return $this;
     }
