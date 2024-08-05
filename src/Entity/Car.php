@@ -26,6 +26,10 @@ class Car
     #[ORM\Column]
     private ?bool $energy = null;
 
+    #[ORM\ManyToOne(inversedBy: 'Car')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Color $color = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +79,18 @@ class Car
     public function setEnergy(bool $energy): static
     {
         $this->energy = $energy;
+
+        return $this;
+    }
+
+    public function getColor(): ?Color
+    {
+        return $this->color;
+    }
+
+    public function setColor(?Color $color): static
+    {
+        $this->color = $color;
 
         return $this;
     }
