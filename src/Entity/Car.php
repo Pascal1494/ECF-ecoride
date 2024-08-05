@@ -19,12 +19,12 @@ class Car
 
     #[ORM\Column(length: 50)]
     private ?string $licencePlate = null;
-
-    #[ORM\Column(length: 50)]
-    private ?string $energy = null;
-
+    
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $commercialDate = null;
+
+    #[ORM\Column]
+    private ?bool $energy = null;
 
     public function getId(): ?int
     {
@@ -55,18 +55,6 @@ class Car
         return $this;
     }
 
-    public function getEnergy(): ?string
-    {
-        return $this->energy;
-    }
-
-    public function setEnergy(string $energy): static
-    {
-        $this->energy = $energy;
-
-        return $this;
-    }
-
     public function getCommercialDate(): ?\DateTimeImmutable
     {
         return $this->commercialDate;
@@ -75,6 +63,18 @@ class Car
     public function setCommercialDate(\DateTimeImmutable $commercialDate): static
     {
         $this->commercialDate = $commercialDate;
+
+        return $this;
+    }
+
+    public function isEnergy(): ?bool
+    {
+        return $this->energy;
+    }
+
+    public function setEnergy(bool $energy): static
+    {
+        $this->energy = $energy;
 
         return $this;
     }
