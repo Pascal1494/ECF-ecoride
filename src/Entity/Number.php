@@ -24,9 +24,16 @@ class Number
     #[ORM\OneToMany(targetEntity: Car::class, mappedBy: 'NumberPlace')]
     private Collection $car;
 
+    /**
+     * @var Collection<int, Covoit>
+     */
+    #[ORM\ManyToMany(targetEntity: Covoit::class, mappedBy: 'NbPlace')]
+    private Collection $covoits;
+
     public function __construct()
     {
         $this->car = new ArrayCollection();
+        $this->covoits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -71,6 +78,33 @@ class Number
             if ($car->getNumberPlace() === $this) {
                 $car->setNumberPlace(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Covoit>
+     */
+    public function getCovoits(): Collection
+    {
+        return $this->covoits;
+    }
+
+    public function addCovoit(Covoit $covoit): static
+    {
+        if (!$this->covoits->contains($covoit)) {
+            $this->covoits->add($covoit);
+            $covoit->addNbPlace($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCovoit(Covoit $covoit): static
+    {
+        if ($this->covoits->removeElement($covoit)) {
+            $covoit->removeNbPlace($this);
         }
 
         return $this;

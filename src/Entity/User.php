@@ -65,9 +65,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Car::class, mappedBy: 'DriverCar')]
     private Collection $cars;
 
+    /**
+     * @var Collection<int, Covoit>
+     */
+    #[ORM\OneToMany(targetEntity: Covoit::class, mappedBy: 'diverUser')]
+    private Collection $covoits;
+
     public function __construct()
     {
         $this->cars = new ArrayCollection();
+        $this->covoits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -264,6 +271,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($car->getDriverCar() === $this) {
                 $car->setDriverCar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Covoit>
+     */
+    public function getCovoits(): Collection
+    {
+        return $this->covoits;
+    }
+
+    public function addCovoit(Covoit $covoit): static
+    {
+        if (!$this->covoits->contains($covoit)) {
+            $this->covoits->add($covoit);
+            $covoit->setDiverUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCovoit(Covoit $covoit): static
+    {
+        if ($this->covoits->removeElement($covoit)) {
+            // set the owning side to null (unless already changed)
+            if ($covoit->getDiverUser() === $this) {
+                $covoit->setDiverUser(null);
             }
         }
 
