@@ -40,6 +40,9 @@ class Car
     #[ORM\ManyToOne(inversedBy: 'car')]
     private ?Number $NumberPlace = null;
 
+    #[ORM\Column]
+    private ?bool $isAnimal = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -137,6 +140,18 @@ class Car
     public function setNumberPlace(?Number $NumberPlace): static
     {
         $this->NumberPlace = $NumberPlace;
+
+        return $this;
+    }
+
+    public function isAnimal(): ?bool
+    {
+        return $this->isAnimal;
+    }
+
+    public function setAnimal(bool $isAnimal): static
+    {
+        $this->isAnimal = $isAnimal;
 
         return $this;
     }
