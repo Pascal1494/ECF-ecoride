@@ -37,6 +37,9 @@ class Car
     #[ORM\ManyToOne(inversedBy: 'cars')]
     private ?User $DriverCar = null;
 
+    #[ORM\ManyToOne(inversedBy: 'car')]
+    private ?Number $NumberPlace = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -122,6 +125,18 @@ class Car
     public function setDriverCar(?User $DriverCar): static
     {
         $this->DriverCar = $DriverCar;
+
+        return $this;
+    }
+
+    public function getNumberPlace(): ?Number
+    {
+        return $this->NumberPlace;
+    }
+
+    public function setNumberPlace(?Number $NumberPlace): static
+    {
+        $this->NumberPlace = $NumberPlace;
 
         return $this;
     }
