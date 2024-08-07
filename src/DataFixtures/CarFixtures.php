@@ -2,15 +2,17 @@
 
 namespace App\DataFixtures;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\Entity\Car;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class CarFixtures extends Fixture
+class CarFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
         $car = new Car();
-        $car->setModel("Renault");
+        $car->setModel("Kangoo");
         $car->setLicencePlate("AB-123-CD");
         $car->setCommercialDate(new \DateTimeImmutable('15-01-2020'));
         $car->setEnergy("Gazole");
@@ -19,10 +21,11 @@ class CarFixtures extends Fixture
         $car->setDriverCar($this->getReference('user_1'));
         $car->setNumberPlace($this->getReference('number_1'));
         $car->setIsAnimal(true);
+        dd($car);
         $manager->persist($Car);
 
         $car = new Car();
-        $car->setModel("Peugeot");
+        $car->setModel("5008");
         $car->setLicencePlate("EF-456-GH");
         $car->setCommercialDate(new \DateTimeImmutable('10-05-2019'));
         $car->setEnergy("Essence");
@@ -34,7 +37,7 @@ class CarFixtures extends Fixture
         $manager->persist($Car);
 
         $car = new Car();
-        $car->setModel("Citroen");
+        $car->setModel("C3");
         $car->setLicencePlate("IJ-789-KL");
         $car->setCommercialDate(new \DateTimeImmutable('20-08-2021'));
         $car->setEnergy("GPL");
@@ -46,7 +49,7 @@ class CarFixtures extends Fixture
         $manager->persist($car);
 
         $car = new Car();
-        $car->setModel("Ford");
+        $car->setModel("Mustang");
         $car->setLicencePlate("MN-012-OP");
         $car->setCommercialDate(new \DateTimeImmutable('05-03-2022'));
         $car->setEnergy("Electric");
@@ -58,7 +61,7 @@ class CarFixtures extends Fixture
         $manager->persist($car);
 
         $car = new Car();
-        $car->setModel("Tesla");
+        $car->setModel("Model 3");
         $car->setLicencePlate("QR-345-ST");
         $car->setCommercialDate(new \DateTimeImmutable('12-11-2023'));
         $car->setEnergy("Eletric");
@@ -71,5 +74,15 @@ class CarFixtures extends Fixture
         
 
         $manager->flush();
+    }
+
+    public function getDependencies()
+    {
+        return [
+            ColorFixtures::class,
+            VehicleManufacturerFixtures::class,
+            UserFixtures::class,
+            NumberFixtures::class,
+        ];
     }
 }

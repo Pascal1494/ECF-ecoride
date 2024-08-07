@@ -36,12 +36,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $firstmane = null;
+    private ?string $firstname = null;
 
     #[ORM\Column(length: 50)]
     private ?string $lastname = null;
 
-    #[ORM\Column(length: 13)]
+    #[ORM\Column(length: 150)]
     private ?string $phone = null;
 
     #[ORM\Column(length: 150)]
@@ -151,14 +151,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getFirstmane(): ?string
+    public function getFirstname(): ?string
     {
-        return $this->firstmane;
+        return $this->firstname;
     }
 
-    public function setFirstmane(string $firstmane): static
+    public function setFirstname(string $firstname): static
     {
-        $this->firstmane = $firstmane;
+        $this->firstname = $firstname;
 
         return $this;
     }
